@@ -1,0 +1,1 @@
+window.onload=function(){outerWidth=window.outerWidth,referrer=document.referrer,domain=location.host,pageURL=location.href,fetch("http://127.0.0.1:5000/api/click",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({outerWidth:outerWidth,referrer:referrer,domain:domain,pageURL:pageURL})}).then(e=>{console.log(e.json())}).catch(e=>{console.error(e)})};

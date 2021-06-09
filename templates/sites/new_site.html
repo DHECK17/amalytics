@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{current_user.id}} | Sites
+{% endblock title %}
+
+{% block content %}
+<form action="" method="post">
+    {{form.csrf_token}}
+    {{form.name}}
+    <input type="submit" value="Add Website">
+</form>
+
+<br><br>
+
+{% if websites is defined %}
+{% for website in websites %}
+<li><a href="{{url_for('sites.site', website=website.url)}}">{{website.url}}</a></li>
+{% endfor %}
+{% else %}
+No websites yet
+{% endif %}
+
+
+{% endblock content %}

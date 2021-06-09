@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+LogIn | Amalytics
+{% endblock title %}
+
+{% block content %}
+<form action="" method="post">
+    {{form.csrf_token}}
+    {{form.username}}
+    {{form.password}}
+    <input type="submit" value="Log In">
+    <br><br>
+    Don't have an account yet?<a href="{{ url_for('auth.signup') }}">Sign Up</a>
+</form>
+{% if form.username.errors %}
+<ul class="errors">
+    {% for error in form.name %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock content %}
