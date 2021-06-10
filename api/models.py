@@ -3,5 +3,5 @@ from db import db, schema
 
 class Click:
     @staticmethod
-    def create():
-        pass
+    def create(payload):
+        return db.insert(schema, "clicks", [payload])

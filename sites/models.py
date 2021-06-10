@@ -17,3 +17,11 @@ class Website:
         except HarperDBError:
             websites = None
         return websites
+
+    @staticmethod
+    def get_website(website: str):
+        try:
+            site = db.search_by_value(schema, table, "url", website)
+        except HarperDBError:
+            site = None
+        return site
