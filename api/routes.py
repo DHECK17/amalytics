@@ -93,6 +93,7 @@ def click():
             os = user_agent.os.family
 
         data.update(browser=browser, os=os)
+        app.redis_client.set(user_hash, "+", getenv("HASH_EXPIRY"))
 
         # run in background
         threading.Thread(
@@ -102,8 +103,6 @@ def click():
                 data,
             ),
         ).start()
-    else:
-        app.redis_client.set(user_hash, "+", getenv("HASH_EXPIRY"))
     return jsonify(hello="world")
 
 
