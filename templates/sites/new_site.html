@@ -5,21 +5,38 @@
 {% endblock title %}
 
 {% block content %}
-<form action="" method="post">
-    {{form.csrf_token}}
-    {{form.name}}
-    <input type="submit" value="Add Website">
-</form>
+<div class="text-white min-h-screen bg-base-200">
+    <div class="container text-center mx-auto py-6 px-8">
+        <h1 class="mb-5 text-5xl font-bold">
+            Add New Website
+        </h1>
+        <form action="" method="post">
+            {{form.csrf_token}}
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Website</span>
+                </label>
+                <input name="name" required type="url" placeholder="Enter website URL" class="input input-bordered">
+            </div> <br><br>
+            <input type="submit" value="Add Website" class="btn btn-success">
+        </form>
+        <div class="divider"></div>
+        <h1 class="mb-5 text-5xl font-bold">
+            My Websites
+        </h1> <br><br>
+        <div class="mb-5 text-center mx-auto h-full px-auto">
+            {% if websites is defined %}
+            {% for website in websites %}
 
-<br><br>
+            <a href="{{url_for('sites.site', website=website.url)}}" class="btn btn-primary">{{website.url}}</a> <br>
+            <br>
 
-{% if websites is defined %}
-{% for website in websites %}
-<li><a href="{{url_for('sites.site', website=website.url)}}">{{website.url}}</a></li>
-{% endfor %}
-{% else %}
-No websites yet
-{% endif %}
+            {% endfor %}
+            {% else %}
+            No websites yet
+            {% endif %}
+        </div>
+    </div>
 
-
+</div>
 {% endblock content %}

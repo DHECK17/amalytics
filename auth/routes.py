@@ -16,6 +16,7 @@ def signup():
         username = form.username.data
         password = form.password.data
         Accounts.create(username, bcrypt.hash(password))
+        login_user(User(username))
         return redirect(url_for("homepage"))
     if current_user.is_authenticated:
         return redirect(url_for("sites.new_site"))

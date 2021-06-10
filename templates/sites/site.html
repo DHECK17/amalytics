@@ -5,7 +5,40 @@
 {% endblock title %}
 
 {% block content %}
-<center>
-    <h1>{{website}}</h1>
-</center>
+
+<div class="text-center text-white min-h-screen bg-base-200">
+    <h1 class="mb-5 text-5xl font-bold">
+        {{website}}
+    </h1>
+    <br><br>
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-title">Total Page Views in the last 30 days</div>
+            <div class="stat-value">89,400</div>
+        </div>
+    </div>
+
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-title">Total Page Views in the last 7 days</div>
+            <div class="stat-value">89,400</div>
+        </div>
+    </div>
+
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-title">Total Page Views today</div>
+            <div class="stat-value">89,400</div>
+        </div>
+    </div>
+    <button onclick="get_analytics();">asasdasdasd</button>
+</div>
+
+<script>
+    window.onload = function runner() {
+        get_analytics();
+    }
+</script>
+
+
 {% endblock content %}

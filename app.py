@@ -9,6 +9,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.utils import redirect
 
 from api.routes import api
+from auth.forms import SignUpForm
 from auth.models import Accounts, User
 from auth.routes import auth
 from sites.routes import sites
@@ -51,7 +52,7 @@ def load_user(user_id):
 
 @app.get("/")
 def homepage():
-    return render_template("home.html")
+    return render_template("home.html", form=SignUpForm())
 
 
 @app.get("/amalytics.js")

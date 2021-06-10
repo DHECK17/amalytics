@@ -13,7 +13,12 @@ from sites.models import Website
 from user_agents import parse
 
 from .models import Click
-from .utils import get_browser_count, get_data_for_a_period, referrer_count
+from .utils import (
+    get_browser_count,
+    get_data_for_a_period,
+    get_device_count,
+    referrer_count,
+)
 
 api = Blueprint("api", __name__, url_prefix="/api")
 CORS(api, resources={r"/api/click": {"origins": "*", "headers": "Content-Type"}})
@@ -110,7 +115,6 @@ def click():
 @login_required
 def analytics_data(website: str):
     data = Click.get_click_data(website)
-    print(website)
     if data is None:
         return jsonify(None)
 
@@ -118,5 +122,6 @@ def analytics_data(website: str):
     result.update(referrer=referrer_count(data))
     result.update(click_count=get_data_for_a_period(data))
     result.update(browser_count=get_browser_count(data))
+    result.update(device_count=get_device_count(data))
 
     return jsonify(result)
