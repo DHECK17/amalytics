@@ -7,38 +7,47 @@
 {% block content %}
 
 <div class="text-center text-white min-h-screen bg-base-200">
-    <h1 class="mb-5 text-5xl font-bold">
-        {{website}}
+    <h1 class="mb-5 pt-10 text-3xl font-bold">
+        Analytics for {{website}}
     </h1>
     <br><br>
     <div class="stats shadow">
         <div class="stat">
-            <div class="stat-title">Total Page Views in the last 30 days</div>
-            <div class="stat-value">89,400</div>
+            <div id="30days" class="stat-title">Total Page Views in the last 30 days</div>
+            <div class="stat-value">{{data.total_clicks.30}}</div>
         </div>
     </div>
 
     <div class="stats shadow">
         <div class="stat">
-            <div class="stat-title">Total Page Views in the last 7 days</div>
-            <div class="stat-value">89,400</div>
+            <div id="7days" class="stat-title">Total Page Views in the last 7 days</div>
+            <div class="stat-value">{{data.total_clicks.7}}</div>
         </div>
     </div>
 
     <div class="stats shadow">
         <div class="stat">
-            <div class="stat-title">Total Page Views today</div>
-            <div class="stat-value">89,400</div>
+            <div id="1day" class="stat-title">Total Page Views today</div>
+            <div class="stat-value">{{data.total_clicks.1}}</div>
         </div>
-    </div>
-    <button onclick="get_analytics();">asasdasdasd</button>
+    </div><br> <br>
+
+    <canvas id="browserData" height="50px"></canvas>
+    <canvas id="deviceData" height="50px"></canvas>
+
+
+    <script>
+        var browserData = {{ browserDataChart | safe }}
+        var ctx = document.getElementById("browserData").getContext('2d');
+        var myChart = new Chart(ctx, browserData);
+
+        var deviceData = {{ deviceDataChart | safe }}
+        var ctx = document.getElementById("deviceData").getContext('2d');
+        var myChart = new Chart(ctx, deviceData);
+    </script>
 </div>
 
-<script>
-    window.onload = function runner() {
-        get_analytics();
-    }
-</script>
+
 
 
 {% endblock content %}

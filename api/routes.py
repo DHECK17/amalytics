@@ -3,6 +3,7 @@ import threading
 from datetime import datetime
 from hashlib import sha256
 from os import getenv
+from urllib.parse import urlparse
 
 import app
 import requests
@@ -60,13 +61,8 @@ def get_location_and_create_click(ip: str, data: dict):
         pass
 
     # sanitize page url
-    schemes = ["https://", "http://", "www."]
-    domain: str = data.get("domain")
     page_url: str = data.get("pageURL")
-    for scheme in schemes:
-        page_url = page_url.removeprefix(scheme)
-    page_url = page_url.removeprefix(domain)
-    data["pageURL"] = page_url
+    data["pageURL"] = urlparse(page_url).netloc
 
     data.update(extraas)
     Click.create(data)
@@ -78,6 +74,15 @@ def click():
     user_agent = request.headers.get("User-Agent")
     data: dict = json.loads(request.data)
     page = data.get("pageURL")
+    referrer = data.get("referrer")
+    domain = data.get("domain")
+
+    if referrer == "":
+        referrer = "Direct"
+    elif urlparse(referrer).netloc == domain:
+        referrer = ""
+
+    data.update(referrer=referrer)
 
     hashable_string = f"{ip}-{user_agent}-{page}"
     user_hash = hash_sha256(hashable_string)

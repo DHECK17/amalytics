@@ -15,6 +15,7 @@ itsdangerous==2.0.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
 passlib==1.7.4
+pyChart.JS==0.3.0
 pycparser==2.20
 python-dotenv==0.17.1
 PyYAML==5.4.1
