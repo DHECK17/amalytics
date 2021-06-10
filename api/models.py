@@ -10,7 +10,7 @@ class Click:
     @staticmethod
     def get_click_data(website: str):
         try:
-            data = db.search_by_value(schema, "clicks", "url", website)
+            data = db.search_by_value(schema, "clicks", "domain", website)
         except HarperDBError:
             data = None
         return data
