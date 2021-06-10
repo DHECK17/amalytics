@@ -5,9 +5,11 @@ from datetime import datetime
 import requests
 from flask import Blueprint, abort, jsonify, request
 from flask_cors import CORS
+from flask_login import login_required
 from sites.models import Website
 
 from .models import Click
+from .utils import get_data_for_a_period, referrer_count
 
 api = Blueprint("api", __name__, url_prefix="/api")
 CORS(api, resources={r"/api/click": {"origins": "*", "headers": "Content-Type"}})
@@ -48,3 +50,17 @@ def click():
         abort(400, "Domain not registered")
     threading.Thread(target=get_location_and_create_click).start()
     return jsonify(hello="world")
+
+
+@api.get("/<path:website>/analytics")
+@login_required
+def analytics_data(website: str):
+    data = Click.get_click_data(website)
+    if data is None:
+        return jsonify(None)
+    result = dict()
+    result.update(
+        {"referrer": referrer_count(data)},
+        {"click_count": get_data_for_a_period(data)},
+    )
+    return jsonify(data)

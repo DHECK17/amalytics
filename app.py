@@ -53,5 +53,4 @@ def serve_script():
 
 
 if __name__ == "__main__":
-    print(os.environ.get("HARPER_USERNAME"))
     app.run(debug=True, load_dotenv=True)
