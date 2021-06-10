@@ -23,7 +23,11 @@ services:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "./traefik-public-certificates:/certificates"
+    redis:
+        image: redis:latest
+        volumes: 
+            - redis_data:/data
     
 volumes:
-    postgres_data_prod:
+    redis_data:
     traefik-public-certificates:

@@ -21,3 +21,10 @@ def get_data_for_a_period(data: dict) -> dict:
                 dates.append(date)
         result.update({period: Counter(dates)})
     return result
+
+
+def get_browser_count(data: dict):
+    browsers = []
+    for item in data:
+        browsers.append(item.get("browser"))
+    return Counter(browsers)
