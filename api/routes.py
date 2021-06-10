@@ -4,8 +4,8 @@ from datetime import datetime
 from hashlib import sha256
 from os import getenv
 
+import app
 import requests
-from app import redis_client
 from flask import Blueprint, abort, jsonify, request
 from flask_cors import CORS
 from flask_login import login_required
@@ -77,7 +77,7 @@ def click():
     hashable_string = f"{ip}-{user_agent}-{page}"
     user_hash = hash_sha256(hashable_string)
 
-    if redis_client.get(user_hash) is None:
+    if app.redis_client.get(user_hash) is None:
         if ip == "127.0.0.1":
             abort(400, "Local addresses not supported")
 
@@ -103,7 +103,7 @@ def click():
             ),
         ).start()
     else:
-        redis_client.set(user_hash, "+", getenv("HASH_EXPIRY"))
+        app.redis_client.set(user_hash, "+", getenv("HASH_EXPIRY"))
     return jsonify(hello="world")
 
 
