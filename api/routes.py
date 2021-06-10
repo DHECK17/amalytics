@@ -16,13 +16,13 @@ CORS(api, resources={r"/api/click": {"origins": "*", "headers": "Content-Type"}}
 
 
 def get_country_from_ip(ip: str) -> str:
-    endpoint = f"https://ipapi.co/{ip}/json/"
+    endpoint = f"http://ip-api.com/json/{ip}"
     result = requests.get(endpoint).json()
     location = {
-        "country": result.get("country_code"),
+        "country": result.get("countryCode"),
         "location": {
-            "latitude": result.get("latitude"),
-            "longitude": result.get("longitude"),
+            "latitude": result.get("lat"),
+            "longitude": result.get("lon"),
         },
     }
     return location
