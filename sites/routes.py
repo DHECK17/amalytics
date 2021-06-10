@@ -14,6 +14,9 @@ def new_site():
     username = current_user.id
     if request.method == "POST" and form.validate_on_submit():
         website = form.name.data
+        for scheme in ["https://", "http://", "www."]:
+            if website.startswith(scheme):
+                website.removeprefix(scheme)
         Website.create(website, username)
     websites = Website.get_all_websites(username)
     return render_template("sites/new_site.html", form=form, websites=websites)
