@@ -30,20 +30,10 @@ def get_country_from_ip(ip: str) -> str:
 
 
 def get_location_and_create_click(ip: str, data: dict):
-    browser, os = None, None
-
-    user_agent = request.headers.get("User-Agent")
-    if user_agent is not None:
-        user_agent = parse(user_agent)
-        browser = user_agent.browser.family
-        os = user_agent.os.family
-
     extraas = {
         "ip": ip,
         "location": get_country_from_ip(ip),
         "created_at": datetime.now().date().isoformat(),
-        "browser": browser,
-        "os": os,
     }
     if data.get("outerWidth") >= 1000:
         data["device"] = "Desktop"
@@ -78,6 +68,17 @@ def click():
     domain_exist = Website.get_website(data.get("domain"))
     if domain_exist is None or domain_exist == []:
         abort(400, "Domain not registered")
+
+    browser, os = None, None
+
+    user_agent = request.headers.get("User-Agent")
+    if user_agent is not None:
+        user_agent = parse(user_agent)
+        browser = user_agent.browser.family
+        os = user_agent.os.family
+
+    data.update(browser=browser, os=os)
+
     # run in background
     threading.Thread(
         target=get_location_and_create_click,
