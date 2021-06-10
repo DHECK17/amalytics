@@ -1,4 +1,5 @@
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask.helpers import flash
 from flask_login import current_user, login_required
 
 from .forms import WebsiteForm
@@ -14,9 +15,15 @@ def new_site():
     username = current_user.id
     if request.method == "POST" and form.validate_on_submit():
         website = form.name.data
+        website_exists = Website.get_website(website)
+        if website_exists is not None:
+            flash("Website already added to amalytics")
+            return redirect(url_for("sites.new_site"))
+        if website[-1] == "/":
+            website = website[:-1]
         for scheme in ["https://", "http://", "www."]:
             if website.startswith(scheme):
-                website.removeprefix(scheme)
+                website = website.removeprefix(scheme)
         Website.create(website, username)
     websites = Website.get_all_websites(username)
     return render_template("sites/new_site.html", form=form, websites=websites)

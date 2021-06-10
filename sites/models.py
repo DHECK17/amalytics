@@ -24,4 +24,6 @@ class Website:
             site = db.search_by_value(schema, table, "url", website)
         except HarperDBError:
             site = None
+        if site == []:
+            site = None
         return site
