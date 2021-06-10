@@ -48,7 +48,15 @@ def click():
     domain_exist = Website.get_website(data.get("domain"))
     if domain_exist is None or domain_exist == []:
         abort(400, "Domain not registered")
-    threading.Thread(target=get_location_and_create_click).start()
+    # run in background
+    threading.Thread(
+        target=get_location_and_create_click,
+        args=(
+            ip,
+            data,
+        ),
+    ).start()
+
     return jsonify(hello="world")
 
 
