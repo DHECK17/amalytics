@@ -5,6 +5,7 @@ from api.utils import (
     get_device_count,
     referrer_count,
 )
+from db import db
 from flask import Blueprint, jsonify, redirect, render_template, request, url_for
 from flask.helpers import flash
 from flask_login import current_user, login_required
@@ -54,7 +55,7 @@ def site(website: str):
     result.update(browser_count=browser_count)
     result.update(device_count=device_count)
 
-    # Build chart of the browser used
+    # Build chart for the browser used
     class BrowserChart(BaseChart):
         type = ChartType.Pie
 
@@ -66,7 +67,7 @@ def site(website: str):
         class labels:
             grouped = list(browser_count.keys())
 
-    # Build chart of the browser used
+    # Build chart for the device used
     class DeviceChart(BaseChart):
         type = ChartType.Pie
 
