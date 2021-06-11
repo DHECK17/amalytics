@@ -1,4 +1,6 @@
-from api.models import Click
+from datetime import datetime, timedelta
+from urllib.parse import urlparse
+
 from api.utils import (
     get_browser_count,
     get_data_for_a_period,
@@ -30,9 +32,7 @@ def new_site():
             return redirect(url_for("sites.new_site"))
         if website[-1] == "/":
             website = website[:-1]
-        for scheme in ["https://", "http://", "www."]:
-            if website.startswith(scheme):
-                website = website.removeprefix(scheme)
+        website = urlparse(website).netloc
         Website.create(website, username)
     websites = Website.get_all_websites(username)
     return render_template("sites/new_site.html", form=form, websites=websites)
@@ -41,7 +41,10 @@ def new_site():
 @sites.route("/<path:website>", methods=["GET", "POST"])
 @login_required
 def site(website: str):
-    data = Click.get_click_data(website)
+    ts = (datetime.now() + timedelta(days=-30)).timestamp()
+    data = db.sql(
+        f"SELECT * FROM amalytics.clicks WHERE __createdtime__ > {ts} AND domain='{website}'"
+    )
     if data is None:
         return jsonify(None)
 
@@ -51,9 +54,22 @@ def site(website: str):
 
     result = dict()
     result.update(referrer=referrer_count(data))
-    result.update(click_count=click_count)
-    result.update(browser_count=browser_count)
-    result.update(device_count=device_count)
+    # Build chart for click count
+    class ClickChart(BaseChart):
+        type = ChartType.Line
+
+        class data:
+            label = "Clicks"
+            data = list(click_count[30].values())
+            backgroundColor = Color.Cyan
+
+        class labels:
+            grouped = list(click_count[30].keys())
+
+        class options:
+            legend = {
+                "labels": {"fontColor": "white"},
+            }
 
     # Build chart for the browser used
     class BrowserChart(BaseChart):
@@ -92,4 +108,5 @@ def site(website: str):
         data=result,
         browserDataChart=BrowserChart().get(),
         deviceDataChart=DeviceChart().get(),
+        clickChart=ClickChart().get(),
     )

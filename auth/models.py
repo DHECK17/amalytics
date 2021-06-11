@@ -17,6 +17,8 @@ class Accounts:
             user = db.search_by_value(schema, table, "username", username)
         except HarperDBError:
             user = None
+        if user == []:
+            user = None
         return user
 
 

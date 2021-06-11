@@ -19,7 +19,25 @@
                 <input name="name" required type="url" placeholder="Enter website URL" class="input input-bordered">
             </div> <br><br>
             <input type="submit" value="Add Website" class="btn btn-success">
-        </form>
+        </form> <br><br>
+        <p class="mb-5 text-2xl">
+            After adding a new website for tracking, insert the following script just before the close of
+            <code>body</code> tag. <br><br>
+            <kbd>
+                <div class="form-control">
+                    <input type="text" class="input" id="foo"
+                        value="<script src='https://amalytics.amalshaji.com/amalytics.js'></script>" readonly>
+                    <!-- Trigger -->
+                    <button class="btn"
+                        data-clipboard-text="<script src='https://amalytics.amalshaji.com/amalytics.js'></script>">
+                        Copy to clipboard
+                    </button>
+                </div>
+            </kbd>
+        </p>
+        <script>
+            new ClipboardJS(".btn");
+        </script>
         <div class="divider"></div>
         <h1 class="mb-5 text-5xl font-bold">
             My Websites

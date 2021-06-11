@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 
 import app
 import requests
+from db import db
 from flask import Blueprint, abort, jsonify, request
 from flask_cors import CORS
 from flask_login import login_required
@@ -114,19 +115,3 @@ def click():
             ),
         ).start()
     return jsonify(hello="world")
-
-
-@api.get("/<path:website>/analytics")
-@login_required
-def analytics_data(website: str):
-    data = Click.get_click_data(website)
-    if data is None:
-        return jsonify(None)
-
-    result = dict()
-    result.update(referrer=referrer_count(data))
-    result.update(click_count=get_data_for_a_period(data))
-    result.update(browser_count=get_browser_count(data))
-    result.update(device_count=get_device_count(data))
-
-    return jsonify(result)

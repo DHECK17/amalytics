@@ -15,8 +15,13 @@ def signup():
     if request.method == "POST" and form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        Accounts.create(username, bcrypt.hash(password))
+        user_exists = Accounts.get(username)
+        if user_exists is not None:
+            flash("Username taken")
+            return redirect(url_for("homepage"))
+        print(Accounts.create(username, bcrypt.hash(password)))
         login_user(User(username))
+        flash(f"Account created")
         return redirect(url_for("homepage"))
     if current_user.is_authenticated:
         return redirect(url_for("sites.new_site"))
@@ -38,6 +43,7 @@ def login():
             flash("Wrong password")
         else:
             login_user(User(account["username"]))
+            flash(f"Logged in as {username}")
             return redirect(url_for("sites.new_site"))
         return redirect(url_for("auth.login"))
     if current_user.is_authenticated:
@@ -49,4 +55,5 @@ def login():
 @auth.get("/logout")
 def logout():
     logout_user()
+    flash("Logout successful")
     return redirect(url_for("homepage"))

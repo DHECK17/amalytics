@@ -14,16 +14,11 @@
             href="https://bafkreiama5ah65wcido2yxbzanuqr7ubqexoobpxwwgf33zotwfwdkc7qm.ipfs.dweb.link/"
             type="image/x-icon">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-
+        <link rel="stylesheet" href="{{url_for('static', filename='snackbar.min.css')}}">
+        <script src="{{url_for('static', filename='snackbar.min.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
     </head>
     <body>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <p>{{ message }}</p>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
         <div class="navbar shadow-lg bg-neutral text-neutral-content">
             <div class="flex-none px-2 mx-2">
                 <span class="text-lg font-bold">
@@ -40,6 +35,9 @@
                         GitHub
                     </a>
                     {% if current_user.is_authenticated %}
+                    <a href="{{url_for('sites.new_site')}}" class="btn btn-ghost btn-sm rounded-btn">
+                        Sites
+                    </a>
                     <a href="{{url_for('auth.logout')}}" class="btn btn-ghost btn-sm rounded-btn">
                         Logout
                     </a>
@@ -53,5 +51,15 @@
         </div>
         {% block content %}{% endblock content %}
         <script src="/amalytics.js"></script>
+        <script>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            Snackbar.show({ text: '{{ message }}', pos: 'bottom-center', showAction: false, });
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+        </script>
     </body>
 </html>

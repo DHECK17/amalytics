@@ -30,26 +30,42 @@
             <div id="1day" class="stat-title">Total Page Views today</div>
             <div class="stat-value">{{data.total_clicks.1}}</div>
         </div>
-    </div><br> <br>
-
-    <div class="flex flex-row">
-        <canvas id="browserData"></canvas>
-        <canvas id="deviceData"></canvas>
     </div>
+    <br><br>
+    <canvas id="clickData" height="100px"></canvas>
+    <br> <br>
 
+    <div class="stats shadow">
+        <div class="stat">
+            <div id="1day" class="stat-title">Device share for the last 30 days</div>
+            <div class="stat-value"><canvas id="deviceData"></canvas></div>
 
-    <script>
-        var browserData = {{ browserDataChart | safe }}
-        var ctx = document.getElementById("browserData").getContext('2d');
-        var myChart = new Chart(ctx, browserData);
+        </div>
+    </div>
+    <br> <br>
 
-        var deviceData = {{ deviceDataChart | safe }}
-        var ctx = document.getElementById("deviceData").getContext('2d');
-        var myChart = new Chart(ctx, deviceData);
-    </script>
+    <div class="stats shadow">
+        <div class="stat">
+            <div id="1day" class="stat-title">Browser share for the last 30 days</div>
+            <div class="stat-value"><canvas id="browserData"></canvas></div>
+        </div>
+    </div>
+    <br> <br>
 </div>
 
+<script>
+    var browserData = {{ browserDataChart | safe }}
+    var ctx = document.getElementById("browserData").getContext('2d');
+    var myChart = new Chart(ctx, browserData);
 
+    var deviceData = {{ deviceDataChart | safe }}
+    var ctx = document.getElementById("deviceData").getContext('2d');
+    var myChart = new Chart(ctx, deviceData);
+
+    var clickData = {{ clickChart | safe }}
+    var ctx = document.getElementById("clickData").getContext('2d');
+    var myChart = new Chart(ctx, clickData);
+</script>
 
 
 {% endblock content %}
