@@ -80,7 +80,7 @@ def site(website: str):
         type = ChartType.Line
 
         class data:
-            label = "Clicks"
+            label = "Views"
             data = list(click_count[30].values())
             backgroundColor = Color.Cyan
 
