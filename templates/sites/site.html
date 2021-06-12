@@ -32,10 +32,16 @@
         </div>
     </div>
     <br><br>
-    <canvas id="clickData" height="100px"></canvas>
-    <br> <br>
 
-    <div class="stats shadow">
+    <div class="stats shadow h-1/4 sm:w-1/2">
+        <div class="stat">
+            <div id="1day" class="stat-title">Click data for the last 30 days</div>
+            <div class="stat-value"><canvas id="clickData"></canvas></div>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="stats shadow h-1/4 sm:w-1/2">
         <div class="stat">
             <div id="1day" class="stat-title">Device share for the last 30 days</div>
             <div class="stat-value"><canvas id="deviceData"></canvas></div>
@@ -44,10 +50,18 @@
     </div>
     <br> <br>
 
-    <div class="stats shadow">
+    <div class="stats shadow h-1/4 sm:w-1/2">
         <div class="stat">
             <div id="1day" class="stat-title">Browser share for the last 30 days</div>
             <div class="stat-value"><canvas id="browserData"></canvas></div>
+        </div>
+    </div>
+    <br> <br>
+
+    <div class="stats shadow h-1/4 sm:w-1/2">
+        <div class="stat">
+            <div id="1day" class="stat-title">Browser share for the last 30 days</div>
+            <div class="stat-value"><canvas id="referrerData"></canvas></div>
         </div>
     </div>
     <br> <br>
@@ -65,6 +79,10 @@
     var clickData = {{ clickChart | safe }}
     var ctx = document.getElementById("clickData").getContext('2d');
     var myChart = new Chart(ctx, clickData);
+
+    var referrerData = {{ referrerChart | safe }}
+    var ctx = document.getElementById("referrerData").getContext('2d');
+    var myChart = new Chart(ctx, referrerData);
 </script>
 
 

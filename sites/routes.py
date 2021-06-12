@@ -33,6 +33,9 @@ def new_site():
         if website[-1] == "/":
             website = website[:-1]
         website = urlparse(website).netloc
+        if website == "":
+            flash("Please enter a valid website")
+            return redirect(url_for("sites.new_site"))
         Website.create(website, username)
     websites = Website.get_all_websites(username)
     return render_template("sites/new_site.html", form=form, websites=websites)
@@ -51,9 +54,27 @@ def site(website: str):
     click_count = get_data_for_a_period(data)
     browser_count = get_browser_count(data)
     device_count = get_device_count(data)
+    referrer = referrer_count(data)
+
+    try:
+        del referrer[""]
+    except KeyError:
+        pass
 
     result = dict()
-    result.update(referrer=referrer_count(data))
+
+    # Build chart for referrer count
+    class ReferrerChart(BaseChart):
+        type = ChartType.Bar
+
+        class data:
+            label = "Referrers"
+            data = list(referrer.values())
+            backgroundColor = Color.Palette(Color.Magenta, n=len(data), generator="hue")
+
+        class labels:
+            grouped = list(referrer.keys())
+
     # Build chart for click count
     class ClickChart(BaseChart):
         type = ChartType.Line
@@ -109,4 +130,5 @@ def site(website: str):
         browserDataChart=BrowserChart().get(),
         deviceDataChart=DeviceChart().get(),
         clickChart=ClickChart().get(),
+        referrerChart=ReferrerChart().get(),
     )

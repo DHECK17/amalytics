@@ -7,20 +7,12 @@ from urllib.parse import urlparse
 
 import app
 import requests
-from db import db
 from flask import Blueprint, abort, jsonify, request
 from flask_cors import CORS
-from flask_login import login_required
 from sites.models import Website
 from user_agents import parse
 
 from .models import Click
-from .utils import (
-    get_browser_count,
-    get_data_for_a_period,
-    get_device_count,
-    referrer_count,
-)
 
 api = Blueprint("api", __name__, url_prefix="/api")
 CORS(api, resources={r"/api/click": {"origins": "*", "headers": "Content-Type"}})
@@ -82,6 +74,11 @@ def click():
         referrer = "Direct"
     elif urlparse(referrer).netloc == domain:
         referrer = ""
+    else:
+        referrer = urlparse(referrer).netloc.removeprefix("www.")
+
+    if referrer[-1] == "/":
+        referrer = referrer[:-1]
 
     data.update(referrer=referrer)
 

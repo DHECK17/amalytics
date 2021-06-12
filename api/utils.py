@@ -6,7 +6,7 @@ def referrer_count(data: dict):
     referrers = []
     for i in data:
         referrers.append(i.get("referrer"))
-    return Counter(referrers).most_common(6)
+    return Counter(referrers)
 
 
 def get_data_for_a_period(data: dict) -> dict:

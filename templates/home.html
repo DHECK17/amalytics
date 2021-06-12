@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Home
-{% endblock title %}
-
 {% block content %}
 <div class="hero min-h-screen bg-base-200">
     <div class="flex-col justify-center hero-content lg:flex-row">
@@ -13,10 +9,10 @@ Home
             </h1>
             <p class="mb-5 text-2xl">
                 A tiny analytics service powered by harperdb. Built by <a href="https://amalshaji.com"
-                    class="link link-secondary" target="_blank">Amal Shaji</a> with 💖 and ☕<br><br>
+                    class="link link-secondary" target="_blank">Amal</a> with 💖 and ☕<br><br>
                 {% if current_user.is_authenticated %}
                 Welcome back, {{ current_user.id }}! <br> <br>
-                <a href="{{ url_for('sites.new_site') }}" class="btn btn-primary">Goto My Sites</a>
+                <a href="{{ url_for('sites.new_site') }}" class="btn btn-primary">My Sites</a>
                 <a href="{{url_for('auth.logout')}}" class="btn btn-secondary">Log Out</a>
             </p>
         </div>
