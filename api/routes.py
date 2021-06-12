@@ -77,8 +77,11 @@ def click():
     else:
         referrer = urlparse(referrer).netloc.removeprefix("www.")
 
-    if referrer[-1] == "/":
-        referrer = referrer[:-1]
+    try:
+        if referrer[-1] == "/":
+            referrer = referrer[:-1]
+    except IndexError:
+        pass
 
     data.update(referrer=referrer)
 

@@ -7,64 +7,66 @@
 {% block content %}
 
 <div class="text-center text-white min-h-screen bg-base-200">
-    <h1 class="mb-5 pt-10 text-3xl font-bold">
-        Analytics for {{website}}
-    </h1>
-    <br><br>
-    <div class="stats shadow">
-        <div class="stat">
-            <div id="30days" class="stat-title">Total Page Views in the last 30 days</div>
-            <div class="stat-value">{{data.total_clicks.30}}</div>
+    <div class="md:w-auto">
+        <h1 class="mb-5 pt-10 text-3xl font-bold">
+            Analytics for {{website}}
+        </h1>
+        <br><br>
+        <div class="stats shadow">
+            <div class="stat">
+                <div id="30days" class="stat-title">Total Page Views in the last 30 days</div>
+                <div class="stat-value">{{data.total_clicks.30}}</div>
+            </div>
         </div>
-    </div>
 
-    <div class="stats shadow">
-        <div class="stat">
-            <div id="7days" class="stat-title">Total Page Views in the last 7 days</div>
-            <div class="stat-value">{{data.total_clicks.7}}</div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div id="7days" class="stat-title">Total Page Views in the last 7 days</div>
+                <div class="stat-value">{{data.total_clicks.7}}</div>
+            </div>
         </div>
-    </div>
 
-    <div class="stats shadow">
-        <div class="stat">
-            <div id="1day" class="stat-title">Total Page Views today</div>
-            <div class="stat-value">{{data.total_clicks.1}}</div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div id="1day" class="stat-title">Total Page Views today</div>
+                <div class="stat-value">{{data.total_clicks.1}}</div>
+            </div>
         </div>
-    </div>
-    <br><br>
+        <br><br>
 
-    <div class="stats shadow">
-        <div class="stat">
-            <div class="stat-title">View data for the last 30 days</div>
-            <div class="stat-value"><canvas id="clickData"></canvas></div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">View data for the last 30 days</div>
+                <div class="stat-value"><canvas id="clickData"></canvas></div>
+            </div>
         </div>
-    </div>
-    <br><br>
+        <br><br>
 
-    <div class="stats shadow">
-        <div class="stat">
-            <div class="stat-title">Device share for the last 30 days</div>
-            <div class="stat-value"><canvas id="deviceData"></canvas></div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Device share for the last 30 days</div>
+                <div class="stat-value"><canvas id="deviceData"></canvas></div>
 
+            </div>
         </div>
-    </div>
-    <br> <br>
+        <br> <br>
 
-    <div class="stats shadow">
-        <div class="stat">
-            <div class="stat-title">Browser share for the last 30 days</div>
-            <div class="stat-value"><canvas id="browserData"></canvas></div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Browser share for the last 30 days</div>
+                <div class="stat-value"><canvas id="browserData"></canvas></div>
+            </div>
         </div>
-    </div>
-    <br> <br>
+        <br> <br>
 
-    <div class="stats shadow">
-        <div class="stat">
-            <div class="stat-title">Referrer count for the last 30 days</div>
-            <div class="stat-value"><canvas id="referrerData"></canvas></div>
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Referrer count for the last 30 days</div>
+                <div class="stat-value"><canvas id="referrerData"></canvas></div>
+            </div>
         </div>
+        <br> <br>
     </div>
-    <br> <br>
 </div>
 
 <script>
