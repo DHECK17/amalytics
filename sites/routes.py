@@ -139,8 +139,6 @@ def site(website: str):
         class labels:
             grouped = list(device_count.keys())
 
-    print(visits.values())
-
     # Build chart for page visited
     class PageChart(BaseChart):
         type = ChartType.HorizontalBar
