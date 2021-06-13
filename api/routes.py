@@ -100,7 +100,7 @@ def click():
 
         if user_agent is not None:
             user_agent = parse(user_agent)
-            browser = user_agent.browser.family
+            browser = user_agent.browser.family.replace("Mobile", "").strip()
             os = user_agent.os.family
 
         data.update(browser=browser, os=os)
