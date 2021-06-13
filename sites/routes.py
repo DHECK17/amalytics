@@ -5,6 +5,8 @@ from api.utils import (
     get_browser_count,
     get_data_for_a_period,
     get_device_count,
+    get_referrer_country_pagevisit_browser_device,
+    page_visit_count,
     referrer_count,
 )
 from db import db
@@ -52,9 +54,14 @@ def site(website: str):
         return jsonify(None)
 
     click_count = get_data_for_a_period(data)
-    browser_count = get_browser_count(data)
-    device_count = get_device_count(data)
-    referrer = referrer_count(data)
+
+    (
+        referrer,
+        countries,
+        visits,
+        browser_count,
+        device_count,
+    ) = get_referrer_country_pagevisit_browser_device(data)
 
     try:
         del referrer[""]
@@ -65,7 +72,7 @@ def site(website: str):
 
     # Build chart for referrer count
     class ReferrerChart(BaseChart):
-        type = ChartType.Bar
+        type = ChartType.HorizontalBar
 
         class data:
             label = "Referrers"
@@ -116,6 +123,32 @@ def site(website: str):
         class labels:
             grouped = list(device_count.keys())
 
+    print(visits.values())
+
+    # Build chart for page visited
+    class PageChart(BaseChart):
+        type = ChartType.HorizontalBar
+
+        class data:
+            label = "Page visited"
+            data = list(visits.values())
+            backgroundColor = Color.Palette(Color.Cyan, n=len(data), generator="hue")
+
+        class labels:
+            grouped = list(visits.keys())
+
+    # Build chart for page visited
+    class CountryChart(BaseChart):
+        type = ChartType.HorizontalBar
+
+        class data:
+            label = "Views"
+            data = list(countries.values())
+            backgroundColor = Color.Palette(Color.Apricot, n=len(data), generator="hue")
+
+        class labels:
+            grouped = list(countries.keys())
+
     total_clicks = dict()
 
     for i, v in click_count.items():
@@ -131,4 +164,6 @@ def site(website: str):
         deviceDataChart=DeviceChart().get(),
         clickChart=ClickChart().get(),
         referrerChart=ReferrerChart().get(),
+        pageChart=PageChart().get(),
+        countryChart=CountryChart().get(),
     )

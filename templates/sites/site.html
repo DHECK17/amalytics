@@ -66,6 +66,22 @@
             </div>
         </div>
         <br> <br>
+
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Subpage visits for the last 30 days</div>
+                <div class="stat-value"><canvas id="pageData"></canvas></div>
+            </div>
+        </div>
+        <br> <br>
+
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Subpage visits for the last 30 days</div>
+                <div class="stat-value"><canvas id="countryData"></canvas></div>
+            </div>
+        </div>
+        <br> <br>
     </div>
 </div>
 
@@ -85,6 +101,14 @@
     var referrerData = {{ referrerChart | safe }}
     var ctx = document.getElementById("referrerData").getContext('2d');
     var myChart = new Chart(ctx, referrerData);
+
+    var pageData = {{ pageChart | safe }}
+    var ctx = document.getElementById("pageData").getContext('2d');
+    var myChart = new Chart(ctx, pageData);
+
+    var countryData = {{ countryChart | safe }}
+    var ctx = document.getElementById("countryData").getContext('2d');
+    var myChart = new Chart(ctx, countryData);
 </script>
 
 
