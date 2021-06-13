@@ -6,83 +6,75 @@
 
 {% block content %}
 
-<div class="text-center text-white min-h-screen bg-base-200">
-    <div class="md:w-auto">
-        <h1 class="mb-5 pt-10 text-3xl font-bold">
-            Analytics for {{website}}
-        </h1>
-        <br><br>
-        <div class="stats shadow">
-            <div class="stat">
-                <div id="30days" class="stat-title">Total Page Views in the last 30 days</div>
-                <div class="stat-value">{{data.total_clicks.30}}</div>
-            </div>
+<div class="text-center items-center text-white min-h-screen bg-base-200">
+    <h1 class="mb-5 pt-10 text-3xl font-bold">
+        Analytics for {{website}}
+    </h1>
+    <br><br>
+    <div class="stats shadow border border-base-300">
+        <div class="stat">
+            <div id="30days" class="stat-title">Total Page Views in the last 30 days</div>
+            <div class="stat-value">{{data.total_clicks.30}}</div>
         </div>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div id="7days" class="stat-title">Total Page Views in the last 7 days</div>
-                <div class="stat-value">{{data.total_clicks.7}}</div>
-            </div>
-        </div>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div id="1day" class="stat-title">Total Page Views today</div>
-                <div class="stat-value">{{data.total_clicks.1}}</div>
-            </div>
-        </div>
-        <br><br>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div class="stat-title">View data for the last 30 days</div>
-                <div class="stat-value"><canvas id="clickData"></canvas></div>
-            </div>
-        </div>
-        <br><br>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div class="stat-title">Device share for the last 30 days</div>
-                <div class="stat-value"><canvas id="deviceData"></canvas></div>
-
-            </div>
-        </div>
-        <br> <br>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div class="stat-title">Browser share for the last 30 days</div>
-                <div class="stat-value"><canvas id="browserData"></canvas></div>
-            </div>
-        </div>
-        <br> <br>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div class="stat-title">Referrer count for the last 30 days</div>
-                <div class="stat-value"><canvas id="referrerData"></canvas></div>
-            </div>
-        </div>
-        <br> <br>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div class="stat-title">Subpage visits for the last 30 days</div>
-                <div class="stat-value"><canvas id="pageData"></canvas></div>
-            </div>
-        </div>
-        <br> <br>
-
-        <div class="stats shadow">
-            <div class="stat">
-                <div class="stat-title">County of origin</div>
-                <div class="stat-value"><canvas id="countryData"></canvas></div>
-            </div>
-        </div>
-        <br> <br>
     </div>
+
+    <div class="stats shadow">
+        <div class="stat">
+            <div id="7days" class="stat-title">Total Page Views in the last 7 days</div>
+            <div class="stat-value">{{data.total_clicks.7}}</div>
+        </div>
+    </div>
+
+    <div class="stats shadow">
+        <div class="stat">
+            <div id="1day" class="stat-title">Total Page Views today</div>
+            <div class="stat-value">{{data.total_clicks.1}}</div>
+        </div>
+    </div>
+    <br><br>
+
+    <div class="card w-auto px-2 mx-2 lg:w-1/3 bg-base-100 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+        <br>
+        View data for the last 30 days
+        <canvas id="clickData"></canvas>
+        <br>
+    </div>
+    <br> <br>
+    <div class="card w-auto mx-2 lg:w-1/3 bg-base-100 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+        <br>
+        Device share for the last 30 days
+        <canvas id="deviceData"></canvas>
+        <br>
+    </div>
+    <br> <br>
+    <div class="card w-auto mx-2 lg:w-1/3 bg-base-100 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+        <br>
+        Browser share for the last 30 days
+        <canvas id="browserData"></canvas>
+        <br>
+    </div>
+    <br> <br>
+    <div class="card w-auto px-2 mx-2 lg:w-1/3 bg-base-100 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+        <br>
+        Referrer count for the last 30 days
+        <canvas id="referrerData"></canvas>
+        <br>
+    </div>
+    <br> <br>
+    <div class="card w-auto px-2 mx-2 lg:w-1/3 bg-base-100 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+        <br>
+        Pages visited
+        <canvas id="pageData"></canvas>
+        <br>
+    </div>
+    <br> <br>
+    <div class="card w-auto px-2 mx-2 lg:w-1/3 bg-base-100 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+        <br>
+        Country of origin
+        <canvas id="countryData"></canvas>
+        <br>
+    </div>
+    <br> <br>
 </div>
 
 <script>

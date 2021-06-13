@@ -2,21 +2,18 @@ from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
 from api.utils import (
-    get_browser_count,
     get_data_for_a_period,
-    get_device_count,
     get_referrer_country_pagevisit_browser_device,
-    page_visit_count,
-    referrer_count,
 )
 from db import db
 from flask import Blueprint, jsonify, redirect, render_template, request, url_for
 from flask.helpers import flash
 from flask_login import current_user, login_required
-from pychartjs import BaseChart, ChartType, Color
+from pychartjs import BaseChart, ChartType, Color, Options
 
 from .forms import WebsiteForm
 from .models import Website
+from .utils import country_codes
 
 sites = Blueprint("sites", __name__, url_prefix="/sites")
 
@@ -82,6 +79,17 @@ def site(website: str):
         class labels:
             grouped = list(referrer.keys())
 
+        class options:
+            scales = {
+                "xAxes": [
+                    {
+                        "ticks": {
+                            "beginAtZero": True,
+                        }
+                    }
+                ]
+            }
+
     # Build chart for click count
     class ClickChart(BaseChart):
         type = ChartType.Line
@@ -89,14 +97,22 @@ def site(website: str):
         class data:
             label = "Views"
             data = list(click_count[30].values())
-            backgroundColor = Color.Cyan
+            backgroundColor = Color.Teal
+            pointRadius = 4
+            pointBackgroundColor = Color.Cyan
 
         class labels:
             grouped = list(click_count[30].keys())
 
         class options:
-            legend = {
-                "labels": {"fontColor": "white"},
+            scales = {
+                "yAxes": [
+                    {
+                        "ticks": {
+                            "beginAtZero": True,
+                        }
+                    }
+                ]
             }
 
     # Build chart for the browser used
@@ -137,6 +153,17 @@ def site(website: str):
         class labels:
             grouped = list(visits.keys())
 
+        class options:
+            scales = {
+                "xAxes": [
+                    {
+                        "ticks": {
+                            "beginAtZero": True,
+                        }
+                    }
+                ]
+            }
+
     # Build chart for page visited
     class CountryChart(BaseChart):
         type = ChartType.HorizontalBar
@@ -147,7 +174,18 @@ def site(website: str):
             backgroundColor = Color.Palette(Color.Apricot, n=len(data), generator="hue")
 
         class labels:
-            grouped = list(countries.keys())
+            grouped = [country_codes.get(i) for i in countries.keys()]
+
+        class options:
+            scales = {
+                "xAxes": [
+                    {
+                        "ticks": {
+                            "beginAtZero": True,
+                        }
+                    }
+                ]
+            }
 
     total_clicks = dict()
 
