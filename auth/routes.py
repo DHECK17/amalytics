@@ -9,10 +9,10 @@ from .models import Accounts, User
 auth = Blueprint("auth", __name__, template_folder="templates", url_prefix="/auth")
 
 
-@auth.route("/signup", methods=["GET", "POST"])
+@auth.post("/signup", methods=["GET", "POST"])
 def signup():
     form = SignUpForm()
-    if request.method == "POST" and form.validate_on_submit():
+    if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
         user_exists = Accounts.get(username)
