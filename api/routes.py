@@ -63,7 +63,9 @@ def get_location_and_create_click(ip: str, data: dict):
 
 @api.post("/click")
 def click():
-    ip = request.remote_addr
+    ip = request.remote_addr.split(":")[0]
+    if ip == "127.0.0.1":
+        abort(400, "Local addresses not supported")
     user_agent = request.headers.get("User-Agent")
     data: dict = json.loads(request.data)
     page = data.get("pageURL")
@@ -89,8 +91,6 @@ def click():
     user_hash = hash_sha256(hashable_string)
 
     if app.redis_client.get(user_hash) is None:
-        if ip == "127.0.0.1":
-            abort(400, "Local addresses not supported")
 
         domain_exist = Website.get_website(data.get("domain"))
         if domain_exist is None or domain_exist == []:
