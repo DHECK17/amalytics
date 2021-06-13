@@ -55,7 +55,7 @@ def get_location_and_create_click(ip: str, data: dict):
 
     # sanitize page url
     page_url: str = data.get("pageURL")
-    data["pageURL"] = urlparse(page_url).netloc
+    data["pageURL"] = urlparse(page_url).path
 
     data.update(extraas)
     Click.create(data)
