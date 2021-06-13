@@ -9,7 +9,7 @@ from .models import Accounts, User
 auth = Blueprint("auth", __name__, template_folder="templates", url_prefix="/auth")
 
 
-@auth.post("/signup", methods=["GET", "POST"])
+@auth.post("/signup")
 def signup():
     form = SignUpForm()
     if form.validate_on_submit():
