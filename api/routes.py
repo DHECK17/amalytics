@@ -69,10 +69,10 @@ def click():
     user_agent = request.headers.get("User-Agent")
     data: dict = json.loads(request.data)
     page = data.get("pageURL")
-    referrer = data.get("referrer")
+    referrer = data.get("referrer") 
     domain = data.get("domain")
 
-    host_url = urlparse(request.host_url).netloc
+    host_url = urlparse(request.remote_user).netloc
 
     print(domain, host_url)
 
