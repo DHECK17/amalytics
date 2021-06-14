@@ -74,6 +74,8 @@ def click():
 
     host_url = urlparse(request.host_url).netloc
 
+    print(domain, host_url)
+
     if domain != host_url:
         abort(403, "Not allowed")
 
