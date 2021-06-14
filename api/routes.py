@@ -72,6 +72,11 @@ def click():
     referrer = data.get("referrer")
     domain = data.get("domain")
 
+    host_url = urlparse(request.host_url).netloc
+
+    if domain != host_url:
+        abort(403, "Not allowed")
+
     if referrer == "":
         referrer = "Direct"
     elif urlparse(referrer).netloc == domain:
