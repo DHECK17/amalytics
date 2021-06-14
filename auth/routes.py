@@ -11,21 +11,28 @@ auth = Blueprint("auth", __name__, template_folder="templates", url_prefix="/aut
 
 @auth.post("/signup")
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for("sites.new_site"))
+
     form = SignUpForm()
+
+    username = form.username.data
+    password = form.password.data
+    confirm = form.confirm.data
+
+    if password != confirm:
+        flash("Passwords do not match")
+        return redirect(url_for("homepage"))
+
     if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
         user_exists = Accounts.get(username)
         if user_exists is not None:
             flash("Username taken")
             return redirect(url_for("homepage"))
-        print(Accounts.create(username, bcrypt.hash(password)))
+        Accounts.create(username, bcrypt.hash(password))
         login_user(User(username))
         flash(f"Account created")
-        return redirect(url_for("homepage"))
-    if current_user.is_authenticated:
-        return redirect(url_for("sites.new_site"))
-    return render_template("registration/signup.html", form=form)
+    return redirect(url_for("homepage"))
 
 
 @auth.route("/login", methods=["GET", "POST"])
